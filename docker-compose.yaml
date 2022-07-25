@@ -1,0 +1,19 @@
+version: '3.4'
+services:
+  remote-vscode:
+    build: container/
+    restart: unless-stopped
+    privileged: true
+    tty: true
+    init: true
+    ports:
+      - 0.0.0.0:2222:2222
+    volumes:
+      - ./ssh/:/ssh/
+      - ./projects:/projects
+
+networks:                                
+  default:                               
+    driver: bridge                       
+    driver_opts:                         
+      com.docker.network.driver.mtu: 1300
