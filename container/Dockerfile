@@ -1,7 +1,7 @@
 FROM debian:11
 
 # prepare
-RUN apt-get update && apt-get install -y docker.io openssh-server neovim zsh fuse-overlayfs curl wget iproute2
+RUN apt-get update && apt-get install -y docker.io openssh-server neovim zsh fuse-overlayfs curl wget iproute2 inetutils-ping
 
 # dind
 RUN wget https://raw.githubusercontent.com/moby/moby/v20.10.17/hack/dind -O /usr/local/bin/dind \
@@ -18,8 +18,7 @@ RUN wget https://nodejs.org/dist/v16.16.0/node-v16.16.0-linux-x64.tar.xz -O /tmp
 && npm install -g pnpm
 
 
-ADD init-docker.sh init-sshd.sh /usr/local/bin/
+RUN git config --global user.email jakobniggel@gmail.com && git config --global user.name "Jakob Niggel"
+ADD init-docker.sh init-sshd.sh init-dotfiles.sh init.sh /usr/local/bin/
 
-WORKDIR /projects
-ENTRYPOINT ["bash", "-c", "init-sshd.sh & init-docker.sh"]
-CMD [ "sleep", "infinity" ]
+CMD init.sh

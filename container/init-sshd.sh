@@ -3,6 +3,8 @@
 # prepare config
 sed -i  "s/#Port 22/Port 2222/g" /etc/ssh/sshd_config
 sed -i  "s/#PasswordAuthentication yes/PasswordAuthentication no/g" /etc/ssh/sshd_config
+sed -i  "s/#AllowAgentForwarding yes/AllowAgentForwarding yes/g" /etc/ssh/sshd_config
+sed -i  "s/#AllowTcpForwarding yes/AllowTcpForwarding yes/g" /etc/ssh/sshd_config
 
 # restore sshd keys if available
 if [ -f "/ssh/ssh_host_rsa_key.pub" ]; then
